@@ -720,7 +720,7 @@ git clone --depth 1 'https://github.com/SirSquidly/Oceanic-Expanse' 'sources/oe/
 
 # openterraingenerator
 # https://www.curseforge.com/minecraft/mc-mods/open-terrain-generator/
-git clone --depth 1 'https://github.com/NLBlackEagle/OpenTerrainGenerator' 'sources/openterraingenerator/repo'
+git clone --depth 1 --branch '1.12-OTG+' 'https://github.com/NLBlackEagle/OpenTerrainGenerator' 'sources/openterraingenerator/repo'
 
 # optifine
 # not on cf
