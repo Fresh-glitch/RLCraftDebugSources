@@ -4,18 +4,6 @@
 
 # Note: Does not use 'set -e' to allow skipping already cloned repos
 
-# InfernalMobs
-# https://www.curseforge.com/minecraft/mc-mods/atomicstrykers-infernal-mobs
-git clone --depth 1 'https://github.com/AtomicStryker/atomicstrykers-minecraft-mods' 'sources/InfernalMobs/repo'
-
-# IvToolkit
-# https://www.curseforge.com/minecraft/mc-mods/ivtoolkit
-git clone --depth 1 'https://github.com/Ivorforce/IvToolkit' 'sources/IvToolkit/repo'
-
-# SilentLib
-# https://www.curseforge.com/minecraft/mc-mods/silent-lib
-git clone --depth 1 'https://github.com/SilentChaos512/SilentLib' 'sources/SilentLib/repo'
-
 # aarcaddon
 # https://www.curseforge.com/minecraft/mc-mods/antiqueatlas-recurrentcomplex-compatability
 git clone --depth 1 'https://github.com/fonnymunkey/AntiqueAtlas-RecurrentComplexAddon' 'sources/aarcaddon/repo'
@@ -43,6 +31,10 @@ git clone --depth 1 'https://github.com/Hunternif/AntiqueAtlas' 'sources/antique
 # antiqueatlasautomarker
 # https://www.curseforge.com/minecraft/mc-mods/antiqueatlasautomarker
 git clone --depth 1 'https://github.com/Nischhelm/AntiqueAtlasAutoMarker' 'sources/antiqueatlasautomarker/repo'
+
+# antiquecities
+# not on cf
+# sources not found
 
 # aquaculture
 # https://www.curseforge.com/minecraft/mc-mods/aquaculture
@@ -112,6 +104,14 @@ git clone --depth 1 'https://github.com/fonnymunkey/bbb-unforged' 'sources/bette
 # https://www.curseforge.com/minecraft/mc-mods/yungs-better-caves
 git clone --depth 1 'https://github.com/yungnickyoung/Yungs-Better-Caves' 'sources/bettercaves/repo'
 
+# betterendforge
+# https://www.curseforge.com/minecraft/mc-mods/betterendforge-backport
+git clone --depth 1 'https://github.com/Goodbird-git/BetterEndForge-1.12.2' 'sources/betterendforge/repo'
+
+#bettermineshafts
+# https://www.curseforge.com/minecraft/mc-mods/yungs-better-mineshafts-forge
+git clone --depth 1 'https://github.com/YUNG-GANG/YUNGs-Better-Mineshafts' 'sources/bettermineshafts/repo'
+
 # betternether
 # https://www.curseforge.com/minecraft/mc-mods/betternether
 git clone --depth 1 'https://github.com/quiqueck/BetterNether' 'sources/betternether/repo'
@@ -136,10 +136,6 @@ git clone --depth 1 'https://github.com/fonnymunkey/BetterTabs' 'sources/bettert
 # https://www.curseforge.com/minecraft/mc-mods/bisecthosting-server-integration-menu-forge
 # sources not found
 
-# bop
-# https://www.curseforge.com/minecraft/mc-mods/biomes-o-plenty
-git clone --depth 1 'https://github.com/Glitchfiend/BiomesOPlenty' 'sources/bop/repo'
-
 # blockoverlayfix
 # https://www.curseforge.com/minecraft/mc-mods/block-overlay-fix
 git clone --depth 1 'https://github.com/Meldexun/BlockOverlayFix' 'sources/blockoverlayfix/repo'
@@ -156,6 +152,10 @@ git clone --depth 1 'https://bitbucket.org/bloodnbonesgaming/bnbgamingcore' 'sou
 # https://www.curseforge.com/minecraft/mc-mods/boat-delete-begone
 git clone --depth 1 'https://github.com/Nischhelm/BoatDeleteBeGone' 'sources/boatdeletebegone/repo'
 
+# bop
+# https://www.curseforge.com/minecraft/mc-mods/biomes-o-plenty
+git clone --depth 1 'https://github.com/Glitchfiend/BiomesOPlenty' 'sources/bop/repo'
+
 # borninabarn
 # https://www.curseforge.com/minecraft/mc-mods/born-in-a-barn
 # sources not found
@@ -171,6 +171,10 @@ git clone --depth 1 'https://github.com/ejektaflex/Bountiful' 'sources/bountiful
 # bountifulbaubles
 # https://www.curseforge.com/minecraft/mc-mods/bountifulbaubles
 git clone --depth 1 'https://github.com/CursedFlames/BountifulBaubles' 'sources/bountifulbaubles/repo'
+
+# bq_msi
+# https://www.curseforge.com/minecraft/mc-mods/bq-multiblock-structure-integration
+git clone --depth 1 'https://github.com/fonnymunkey/BQ_Multiblock_Structure_Integration' 'sources/bq_msi/repo'
 
 # bqtweaker
 # https://www.curseforge.com/minecraft/mc-mods/bqtweaker
@@ -216,6 +220,14 @@ git clone --depth 1 'https://github.com/sui-ke/Minecraft-Mod-suikecherry' 'sourc
 # https://www.curseforge.com/minecraft/mc-mods/chunk-animator
 git clone --depth 1 'https://github.com/Harleyoc1/ChunkAnimator' 'sources/chunkanimator/repo'
 
+# claimit
+# https://www.curseforge.com/minecraft/mc-mods/claimit
+git clone --depth 1 'https://github.com/itsmeow/ClaimIt' 'sources/claimit/repo'
+
+# claimit-api
+# https://www.curseforge.com/minecraft/mc-mods/claimit-api
+# sources in claimit sources
+
 # classyhats
 # https://www.curseforge.com/minecraft/mc-mods/classy-hats
 git clone --depth 1 'https://github.com/yrsegal/ClassyHats' 'sources/classyhats/repo'
@@ -231,6 +243,10 @@ git clone --depth 1 'https://github.com/illusivesoulworks/comforts' 'sources/com
 # compatskills
 # https://www.curseforge.com/minecraft/mc-mods/compatskills
 git clone --depth 1 'https://github.com/Coders-After-Dark/CompatSkills' 'sources/compatskills/repo'
+
+# configanytime
+# https://www.curseforge.com/minecraft/mc-mods/configanytime
+git clone --depth 1 'https://github.com/CleanroomMC/ConfigAnytime' 'sources/configanytime/repo'
 
 # contentcreator
 # https://www.curseforge.com/minecraft/mc-mods/content-creator
@@ -296,9 +312,17 @@ git clone --depth 1 'https://github.com/Impelon/Disenchanter' 'sources/disenchan
 # https://www.curseforge.com/minecraft/mc-mods/distinct-damage-descriptions
 git clone --depth 1 'https://github.com/yeelp/Distinct-Damage-Descriptions' 'sources/distinctdamagedescriptions/repo'
 
+# distinctsocketeddescriptions
+# not on cf
+git clone --depth 1 'https://github.com/nischhelm/DistinctSocketDescriptions' 'sources/distinctsocketeddescriptions/repo'
+
 # dldungeonsjbg
 # https://www.curseforge.com/minecraft/mc-mods/project-74246
 git clone --depth 1 'https://github.com/BlackJar72/DoomlikeDungeons' 'sources/dldungeonsjbg/repo'
+
+# dramatictrees
+# https://www.curseforge.com/minecraft/mc-mods/dramatictrees
+git clone --depth 1 'https://github.com/TerraFirmaCraft-The-Final-Frontier/DramaticTrees' 'sources/dramatictrees/repo'
 
 # dramatictrees
 # https://www.curseforge.com/minecraft/mc-mods/dramatictrees
@@ -308,29 +332,29 @@ git clone --depth 1 'https://github.com/TerraFirmaCraft-The-Final-Frontier/Drama
 # https://www.curseforge.com/minecraft/mc-mods/dregora-rl
 #git clone --depth 1 'https://github.com/NLBlackEagle/DregoraRL' 'sources/dregora-rl/repo'
 
+# dshuds
+# https://www.curseforge.com/minecraft/mc-mods/dynamic-surroundings-huds
+git clone --depth 1 'https://github.com/OreCruncher/DynamicSurroundingsHuds' 'sources/dshuds/repo'
+
 # dtbop
 # https://www.curseforge.com/minecraft/mc-mods/dtbop
 git clone --depth 1 'https://github.com/the-realest-stu/DynamicTrees-BOP' 'sources/dtbop/repo'
+
+# dtquark
+# https://www.curseforge.com/minecraft/mc-mods/dynamic-trees-quark
+git clone --depth 1 'https://github.com/DynamicTreesTeam/DynamicTrees-Quark' 'sources/dtquark/repo'
+
+# dttraverse
+# https://www.curseforge.com/minecraft/mc-mods/dynamic-trees-traverse
+git clone --depth 1 'https://github.com/Harleyoc1/DynamicTreesTraverse' 'sources/dttraverse/repo'
 
 # dynamic-surroundings
 # https://www.curseforge.com/minecraft/mc-mods/dynamic-surroundings
 git clone --depth 1 'https://github.com/OreCruncher/DynamicSurroundings' 'sources/dsurround/repo'
 
-# dshuds
-# https://www.curseforge.com/minecraft/mc-mods/dynamic-surroundings-huds
-git clone --depth 1 'https://github.com/OreCruncher/DynamicSurroundingsHuds' 'sources/dshuds/repo'
-
 # dynamictrees
 # https://www.curseforge.com/minecraft/mc-mods/dynamictrees
 git clone --depth 1 'https://www.curseforge.com/minecraft/mc-mods/dynamictrees' 'sources/dynamictrees/repo'
-
-# dramatictrees
-# https://www.curseforge.com/minecraft/mc-mods/dramatictrees
-git clone --depth 1 'https://github.com/TerraFirmaCraft-The-Final-Frontier/DramaticTrees' 'sources/dramatictrees/repo'
-
-# dttraverse
-# https://www.curseforge.com/minecraft/mc-mods/dynamic-trees-traverse
-git clone --depth 1 'https://github.com/Harleyoc1/DynamicTreesTraverse' 'sources/dttraverse/repo'
 
 # dynamictreesdefiledlands
 # https://www.curseforge.com/minecraft/mc-mods/dynamic-trees-defiled-lands
@@ -433,10 +457,6 @@ git clone --depth 1 'https://github.com/Lellson/Food-Expansion' 'sources/food-ex
 # https://www.curseforge.com/minecraft/mc-mods/food-fix
 git clone --depth 1 'https://github.com/Laike-Endaril/Food-Fix' 'sources/foodfix/repo'
 
-# betterendforge
-# https://www.curseforge.com/minecraft/mc-mods/betterendforge-backport
-git clone --depth 1 'https://github.com/Goodbird-git/BetterEndForge-1.12.2' 'sources/betterendforge/repo'
-
 # forgelin
 # https://www.curseforge.com/minecraft/mc-mods/shadowfacts-forgelin
 git clone --depth 1 'https://github.com/shadowfacts/Forgelin' 'sources/forgelin/repo'
@@ -501,6 +521,10 @@ git clone --depth 1 'https://github.com/cdstk/I-Hate-Ghost-Blocks' 'sources/ihat
 # https://www.curseforge.com/minecraft/mc-mods/in-control
 git clone --depth 1 'https://github.com/McJty/InControl' 'sources/incontrol/repo'
 
+# InfernalMobs
+# https://www.curseforge.com/minecraft/mc-mods/atomicstrykers-infernal-mobs
+git clone --depth 1 'https://github.com/AtomicStryker/atomicstrykers-minecraft-mods' 'sources/InfernalMobs/repo'
+
 # inspirations
 # https://www.curseforge.com/minecraft/mc-mods/inspirations
 git clone --depth 1 'https://github.com/KnightMiner/Inspirations' 'sources/inspirations/repo'
@@ -516,6 +540,10 @@ git clone --depth 1 'https://github.com/CreativeMD/ItemPhysic' 'sources/itemphys
 # itlt
 # https://www.curseforge.com/minecraft/mc-mods/its-the-little-things
 git clone --depth 1 'https://github.com/zlepper/itlt' 'sources/itlt/repo'
+
+# IvToolkit
+# https://www.curseforge.com/minecraft/mc-mods/ivtoolkit
+git clone --depth 1 'https://github.com/Ivorforce/IvToolkit' 'sources/IvToolkit/repo'
 
 # jei
 # https://www.curseforge.com/minecraft/mc-mods/jei
@@ -569,10 +597,6 @@ git clone --depth 1 'https://github.com/KameiB/Localizator' 'sources/localizator
 # https://www.curseforge.com/minecraft/mc-mods/locks
 git clone --depth 1 'https://github.com/Melonslise/Locks' 'sources/locks/repo'
 
-# bq_msi
-# https://www.curseforge.com/minecraft/mc-mods/bq-multiblock-structure-integration
-git clone --depth 1 'https://github.com/fonnymunkey/BQ_Multiblock_Structure_Integration' 'sources/bq_msi/repo'
-
 # loginhpfix
 # https://www.curseforge.com/minecraft/mc-mods/login-hp-fix
 git clone --depth 1 'https://github.com/Laike-Endaril/Login-HP-Fix' 'sources/loginhpfix/repo'
@@ -617,10 +641,6 @@ git clone --depth 1 'https://github.com/fonnymunkey/MaterialTweaker' 'sources/ma
 # https://www.curseforge.com/minecraft/mc-mods/mind-palaces
 git clone --depth 1 'https://github.com/Nischhelm/MindPalaces' 'sources/mindpalaces/repo'
 
-# mixinbooter2fermiumbooter
-# https://www.curseforge.com/minecraft/mc-mods/mixinbooter2fermiumbooter
-git clone --depth 1 'https://github.com/Henrykado/MixinBooterPoliticization' 'sources/mixinbooter2fermiumbooter/repo'
-
 # minecraftservertool
 # not on cf
 git clone --depth 1 'https://github.com/Nischhelm/minecraft-server-tools' 'sources/minecraftservertool/repo'
@@ -629,17 +649,13 @@ git clone --depth 1 'https://github.com/Nischhelm/minecraft-server-tools' 'sourc
 # not on cf
 git clone --depth 1 'https://github.com/SpongePowered/Mixin' 'sources/mixin/repo'
 
+# mixinbooter2fermiumbooter
+# https://www.curseforge.com/minecraft/mc-mods/mixinbooter2fermiumbooter
+git clone --depth 1 'https://github.com/Henrykado/MixinBooterPoliticization' 'sources/mixinbooter2fermiumbooter/repo'
+
 # mixinextras
 # not on cf
 git clone --depth 1 'https://github.com/LlamaLad7/MixinExtras' 'sources/mixinextras/repo'
-
-# distinctsocketeddescriptions
-# not on cf
-git clone --depth 1 'https://github.com/nischhelm/DistinctSocketDescriptions' 'sources/distinctsocketeddescriptions/repo'
-
-# testdummy
-# https://www.curseforge.com/minecraft/mc-mods/mmmmmmmmmmmm
-git clone --depth 1 'https://github.com/MehVahdJukaar/DuMmmMmmy' 'sources/testdummy/repo'
 
 # mobarson
 # https://www.curseforge.com/minecraft/mc-mods/mob-arson
@@ -656,6 +672,10 @@ git clone --depth 1 'https://github.com/TerraFirmaCraft-The-Final-Frontier/FileD
 # modtweaker
 # https://www.curseforge.com/minecraft/mc-mods/modtweaker
 git clone --depth 1 'https://github.com/jaredlll08/ModTweaker' 'sources/modtweaker/repo'
+
+# morpheus
+# https://www.curseforge.com/minecraft/mc-mods/morpheus
+git clone --depth 1 'https://github.com/Quetzi/Morpheus' 'sources/morpheus/repo'
 
 # mousetweaks
 # https://www.curseforge.com/minecraft/mc-mods/mouse-tweaks
@@ -697,6 +717,14 @@ git clone --depth 1 'https://github.com/Sintinium/oauth' 'sources/oauth/repo'
 # https://www.curseforge.com/minecraft/mc-mods/oceanic-expanse
 git clone --depth 1 'https://github.com/SirSquidly/Oceanic-Expanse' 'sources/oe/repo'
 
+# openterraingenerator
+# https://www.curseforge.com/minecraft/mc-mods/open-terrain-generator/
+git clone --depth 1 'https://github.com/NLBlackEagle/OpenTerrainGenerator' 'sources/openterraingenerator/repo'
+
+# optifine
+# not on cf
+# not open source
+
 # optifinecitpatch
 # https://www.curseforge.com/minecraft/mc-mods/optifine-cit-enchantment-patch
 git clone --depth 1 'https://github.com/Nischhelm/OptifineCITPatch' 'sources/optifinecitpatch/repo'
@@ -716,6 +744,10 @@ git clone --depth 1 'https://github.com/bl4ckscor3/ParticleCulling' 'sources/par
 # phantoms
 # https://www.curseforge.com/minecraft/mc-mods/phantoms
 git clone --depth 1 'https://github.com/SmileycorpMC/phantoms' 'sources/phantoms/repo'
+
+# phosphor-lighting
+# https://www.curseforge.com/minecraft/mc-mods/phosphor-forge
+# sources not found (deleted)
 
 # phosphorcrashfix
 # https://www.curseforge.com/minecraft/mc-mods/phosphorcrashfix
@@ -764,10 +796,6 @@ git clone --depth 1 'https://github.com/Azmalent/potion-descriptions' 'sources/p
 # quark
 # https://www.curseforge.com/minecraft/mc-mods/quark
 git clone --depth 1 'https://github.com/VazkiiMods/Quark' 'sources/quark/repo'
-
-# dtquark
-# https://www.curseforge.com/minecraft/mc-mods/dynamic-trees-quark
-git clone --depth 1 'https://github.com/DynamicTreesTeam/DynamicTrees-Quark' 'sources/dtquark/repo'
 
 # reachfix
 # https://www.curseforge.com/minecraft/mc-mods/reach-fix
@@ -821,6 +849,10 @@ git clone --depth 1 'https://github.com/fonnymunkey/RLFoliage' 'sources/betterfo
 # https://www.curseforge.com/minecraft/mc-mods/rlmixins
 git clone --depth 1 'https://github.com/fonnymunkey/RLMixins' 'sources/rlmixins/repo'
 
+#rlsocketed
+# not on cf
+git clone --depth 1 'https://github.com/Nischhelm/RLSocketed' 'sources/rlsocketed/repo'
+
 # rltweaker
 # https://www.curseforge.com/minecraft/mc-mods/rltweaker2
 git clone --depth 1 'https://github.com/Meldexun/RLTweaker' 'sources/rltweaker/repo'
@@ -873,6 +905,10 @@ git clone --depth 1 'https://github.com/Laike-Endaril/Set-Bonus' 'sources/setbon
 # https://www.curseforge.com/minecraft/mc-mods/shieldbreak
 git clone --depth 1 'https://github.com/fonnymunkey/ShieldBreak' 'sources/shieldbreak/repo'
 
+# SilentLib
+# https://www.curseforge.com/minecraft/mc-mods/silent-lib
+git clone --depth 1 'https://github.com/SilentChaos512/SilentLib' 'sources/SilentLib/repo'
+
 # simpledifficulty
 # https://www.curseforge.com/minecraft/mc-mods/simpledifficulty
 git clone --depth 1 'https://github.com/Charles445/SimpleDifficulty' 'sources/simpledifficulty/repo'
@@ -896,6 +932,10 @@ git clone --depth 1 'https://github.com/FermiumModding/SoManyEnchantments-1.12.2
 # soundfilters
 # https://www.curseforge.com/minecraft/mc-mods/sound-filters
 git clone --depth 1 'https://github.com/Tmtravlr/SoundFilters' 'sources/soundfilters/repo'
+
+# spark
+# https://www.curseforge.com/minecraft/mc-mods/spark-unforged
+git clone --depth 1 'https://github.com/fonnymunkey/SparkUnforged' 'sources/sparks/repo'
 
 # spartandefiled
 # https://www.curseforge.com/minecraft/mc-mods/spartan-defiled
@@ -948,6 +988,10 @@ git clone --depth 1 'https://github.com/Epoxide-Software/Surge' 'sources/surge/r
 # switchbow
 # https://www.curseforge.com/minecraft/mc-mods/switch-bow
 # sources not found in cf
+
+# testdummy
+# https://www.curseforge.com/minecraft/mc-mods/mmmmmmmmmmmm
+git clone --depth 1 'https://github.com/MehVahdJukaar/DuMmmMmmy' 'sources/testdummy/repo'
 
 # tnt_utilities
 # https://www.curseforge.com/minecraft/mc-mods/tntutils
@@ -1036,47 +1080,3 @@ git clone --depth 1 'https://github.com/yungnickyoung/YUNGs-Law' 'sources/yungsl
 # zenutils
 # https://www.curseforge.com/minecraft/mc-mods/zenutil
 git clone --depth 1 'https://github.com/friendlyhj/ZenUtils' 'sources/zenutils/repo'
-
-# morpheus
-# https://www.curseforge.com/minecraft/mc-mods/morpheus
-git clone --depth 1 'https://github.com/Quetzi/Morpheus' 'sources/morpheus/repo'
-
-# antiquecities
-# not on cf
-# sources not found
-
-#bettermineshafts
-# https://www.curseforge.com/minecraft/mc-mods/yungs-better-mineshafts-forge
-git clone --depth 1 'https://github.com/YUNG-GANG/YUNGs-Better-Mineshafts' 'sources/bettermineshafts/repo'
-
-# claimit
-# https://www.curseforge.com/minecraft/mc-mods/claimit
-git clone --depth 1 'https://github.com/itsmeow/ClaimIt' 'sources/claimit/repo'
-
-# claimit-api
-# https://www.curseforge.com/minecraft/mc-mods/claimit-api
-# sources in claimit sources
-
-# configanytime
-# https://www.curseforge.com/minecraft/mc-mods/configanytime
-git clone --depth 1 'https://github.com/CleanroomMC/ConfigAnytime' 'sources/configanytime/repo'
-
-# openterraingenerator
-# https://www.curseforge.com/minecraft/mc-mods/open-terrain-generator/
-git clone --depth 1 'https://github.com/NLBlackEagle/OpenTerrainGenerator' 'sources/openterraingenerator/repo'
-
-# optifine
-# not on cf
-# not open source
-
-# phosphor-lighting
-# https://www.curseforge.com/minecraft/mc-mods/phosphor-forge
-# sources not found (deleted)
-
-#rlsocketed
-# not on cf
-git clone --depth 1 'https://github.com/Nischhelm/RLSocketed' 'sources/rlsocketed/repo'
-
-# spark
-# https://www.curseforge.com/minecraft/mc-mods/spark-unforged
-git clone --depth 1 'https://github.com/fonnymunkey/SparkUnforged' 'sources/sparks/repo'
