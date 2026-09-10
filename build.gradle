@@ -1,0 +1,121 @@
+// Aggregates mod sources as IntelliJ source roots for debugging. Nothing here is
+// meant to compile - this project exists purely so that when you attach IntelliJ's
+// debugger (Run > Attach to Process, or a "Remote JVM Debug" config) to the live
+// server's JDWP port, IntelliJ can resolve stack frames back to real/readable
+// source instead of raw bytecode: breakpoints, step-through, variable inspection,
+// and navigation all just work.
+//
+// Source priority (highest to lowest):
+// 1. runtime/   - Actual running code from live server (exact match)
+// 2. repo/      - Real upstream source from Git repositories
+// 3. decompiled/ - Decompiled sources (fallback only)
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.minecraftforge.net' }
+    maven { url = 'https://libraries.minecraft.net' }
+    maven { url = 'https://repo.spongepowered.org/maven' }
+    maven { url = 'https://jitpack.io' }
+}
+
+dependencies {
+    // Minecraft + Forge for IDE symbol resolution (NOT for compilation)
+    compileOnly 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
+
+    // Common libraries that Minecraft/Forge use
+    compileOnly 'com.google.guava:guava:21.0'
+    compileOnly 'org.apache.logging.log4j:log4j-api:2.8.1'
+    compileOnly 'org.apache.logging.log4j:log4j-core:2.8.1'
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2' // @Nullable and other annotations
+    compileOnly 'io.netty:netty-all:4.1.9.Final'
+    compileOnly 'com.google.code.gson:gson:2.8.0'
+    compileOnly 'org.apache.commons:commons-lang3:3.5'
+
+    // Mixin support for IDE
+    compileOnly 'org.spongepowered:mixin:0.8.7'
+    annotationProcessor 'org.spongepowered:mixin:0.8.7:processor'
+
+    // MixinExtras for advanced mixin features
+    compileOnly 'com.github.LlamaLad7:MixinExtras:0.5.4'
+    annotationProcessor 'com.github.LlamaLad7:MixinExtras:0.5.4'
+}
+
+def modSourcesDir = file('sources')
+def minecraftBaseDir = file('minecraft-base')
+
+def hasDirectJavaFiles(File dir) {
+    dir.listFiles()?.any { d -> d.isDirectory() && d.listFiles()?.any { f -> f.name.endsWith('.java') } }
+}
+
+def findSrcDirs(File dir, int depth = 0) {
+    def found = []
+    if (depth > 10 || !dir.isDirectory()) return found
+    if (dir.name in ['.git', '.gradle', 'build', 'node_modules', 'out']) return found
+    if (dir.path.endsWith('/src/main/java') || dir.path.endsWith('/src/main/kotlin')) {
+        found << dir
+        return found
+    }
+    // Old-style MCP layout: packages sit directly under src/main, no java/ nesting
+    // (e.g. a decompiled vanilla+Forge workspace like minecraft-base/MC1.12.2/src/main/net/...)
+    if (dir.path.endsWith('/src/main')) {
+        def hasJavaOrKotlinSubdir = new File(dir, 'java').directory || new File(dir, 'kotlin').directory
+        if (!hasJavaOrKotlinSubdir && hasDirectJavaFiles(dir)) {
+            found << dir
+            return found
+        }
+    }
+    dir.listFiles()?.each { f ->
+        if (f.isDirectory()) {
+            found.addAll(findSrcDirs(f, depth + 1))
+        }
+    }
+    return found
+}
+
+def allSourceDirs = []
+
+if (modSourcesDir.exists()) {
+    modSourcesDir.eachDir { modDir ->
+        def runtimeJava = new File(modDir, 'runtime/src/main/java')
+        def repoDir = new File(modDir, 'repo')
+        def decompiledJava = new File(modDir, 'decompiled/src/main/java')
+
+        // Strategy: Combine runtime with repo OR decompiled (never both repo+decompiled)
+        // This avoids duplicate classes while showing all available code
+
+        if (runtimeJava.directory) {
+            // Always include runtime if it exists
+//            allSourceDirs << runtimeJava
+        }
+
+        // Choose repo OR decompiled (prefer repo to avoid duplicates)
+        if (repoDir.directory) {
+            // Use repo sources (real upstream code)
+            allSourceDirs.addAll(findSrcDirs(repoDir))
+        } else if (decompiledJava.directory) {
+            // Use decompiled only if no repo available
+            allSourceDirs << decompiledJava
+        }
+    }
+}
+if (minecraftBaseDir.exists()) {
+    allSourceDirs.addAll(findSrcDirs(minecraftBaseDir))
+}
+
+println "mod-sources debug project: registering ${allSourceDirs.size()} source directories"
+
+idea {
+    module {
+        sourceDirs += allSourceDirs
+        downloadJavadoc = false
+        downloadSources = false
+    }
+}
