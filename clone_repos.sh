@@ -26,7 +26,7 @@ git clone --depth 1 'https://github.com/Iquryy/AmphithereMod' 'sources/amphither
 
 # antiqueatlas
 # https://www.curseforge.com/minecraft/mc-mods/antique-atlas
-git clone --depth 1 'https://github.com/Hunternif/AntiqueAtlas' 'sources/antiqueatlas/repo'
+git clone --depth 1 --branch '1.12.2' 'https://github.com/Hunternif/AntiqueAtlas' 'sources/antiqueatlas/repo'
 
 # antiqueatlasautomarker
 # https://www.curseforge.com/minecraft/mc-mods/antiqueatlasautomarker
@@ -108,6 +108,10 @@ git clone --depth 1 'https://github.com/yungnickyoung/Yungs-Better-Caves' 'sourc
 # https://www.curseforge.com/minecraft/mc-mods/betterendforge-backport
 git clone --depth 1 'https://github.com/Goodbird-git/BetterEndForge-1.12.2' 'sources/betterendforge/repo'
 
+# betterfov
+# https://www.curseforge.com/minecraft/mc-mods/fov
+# no sources available
+
 #bettermineshafts
 # https://www.curseforge.com/minecraft/mc-mods/yungs-better-mineshafts-forge
 git clone --depth 1 'https://github.com/YUNG-GANG/YUNGs-Better-Mineshafts' 'sources/bettermineshafts/repo'
@@ -166,11 +170,11 @@ git clone --depth 1 'https://github.com/fonnymunkey/Bounceable' 'sources/bouncea
 
 # bountiful
 # https://www.curseforge.com/minecraft/mc-mods/bountiful
-git clone --depth 1 --branch '1.12-legacy-forge' 'https://github.com/ejektaflex/Bountiful' 'sources/bountiful/repo'
+git clone --depth 1 --branch '1.12' 'https://github.com/Charles445/Bountiful' 'sources/bountiful/repo'
 
 # bountifulbaubles
 # https://www.curseforge.com/minecraft/mc-mods/bountifulbaubles
-git clone --depth 1 'https://github.com/CursedFlames/BountifulBaubles' 'sources/bountifulbaubles/repo'
+git clone --depth 1 --branch 'forge-1.12.x' 'https://github.com/CursedFlames/BountifulBaubles' 'sources/bountifulbaubles/repo'
 
 # bq_msi
 # https://www.curseforge.com/minecraft/mc-mods/bq-multiblock-structure-integration
@@ -190,7 +194,7 @@ git clone --depth 1 'https://github.com/Tschipp/CallableHorses' 'sources/callabl
 
 # carbon-config
 # https://www.curseforge.com/minecraft/mc-mods/carbon-config
-git clone --depth 1 'https://github.com/Carbon-Config-Project/CarbonConfig' 'sources/carbon-config/repo'
+git clone --depth 1 --branch '1.12.2' 'https://github.com/Carbon-Config-Project/CarbonConfig' 'sources/carbon-config/repo'
 
 # carrots
 # https://www.curseforge.com/minecraft/mc-mods/carrots-lib
@@ -206,11 +210,11 @@ git clone --depth 1 'https://github.com/CD4017BE/CD4017BE_lib' 'sources/cd4017be
 
 # champions
 # https://www.curseforge.com/minecraft/mc-mods/champions
-git clone --depth 1 'https://github.com/TheIllusiveC4/Champions' 'sources/champions/repo'
+git clone --depth 1 -b 1.12.x 'https://github.com/TheIllusiveC4/Champions' 'sources/champions/repo'
 
 # charm
 # https://www.curseforge.com/minecraft/mc-mods/charm
-git clone --depth 1 'https://github.com/svenhjol/Charm' 'sources/charm/repo'
+# 1.12.2 not on github
 
 # cherry-on-1-12-2
 # https://www.curseforge.com/minecraft/mc-mods/cherry-on-1-12-2
@@ -274,7 +278,7 @@ git clone --depth 1 'https://github.com/Leo40Git/CraftableChainmail' 'sources/cr
 
 # crafttweaker
 # https://www.curseforge.com/minecraft/mc-mods/crafttweaker
-git clone --depth 1 'https://github.com/CraftTweaker/CraftTweaker' 'sources/crafttweaker/repo'
+git clone --depth 1 --branch '1.12' 'https://github.com/CraftTweaker/CraftTweaker' 'sources/crafttweaker/repo'
 
 # crafttweakerutils
 # https://www.curseforge.com/minecraft/mc-mods/crafttweaker-utils
