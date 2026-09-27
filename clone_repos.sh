@@ -487,7 +487,7 @@ git clone --depth 1 'https://github.com/Nischhelm/FurnaceXPStorage' 'sources/fur
 
 # fxcontrol
 # https://www.curseforge.com/minecraft/mc-mods/fx-control
-git clone --depth 1 'https://github.com/McJtyMods/FxControl' 'sources/fxcontrol/repo'
+git clone --depth 1 --branch 'master' 'https://github.com/McJtyMods/FxControl' 'sources/fxcontrol/repo'
 
 # gibbed
 # https://www.curseforge.com/minecraft/mc-mods/gibbed
@@ -523,7 +523,7 @@ git clone --depth 1 'https://github.com/cdstk/I-Hate-Ghost-Blocks' 'sources/ihat
 
 # incontrol
 # https://www.curseforge.com/minecraft/mc-mods/in-control
-git clone --depth 1 'https://github.com/McJty/InControl' 'sources/incontrol/repo'
+git clone --depth 1 --branch '1.12' 'https://github.com/McJty/InControl' 'sources/incontrol/repo'
 
 # InfernalMobs
 # https://www.curseforge.com/minecraft/mc-mods/atomicstrykers-infernal-mobs
@@ -611,7 +611,7 @@ git clone 'https://github.com/Daomephsta/LootTweaker' 'sources/loottweaker/repo'
 
 # lostcities
 # https://www.curseforge.com/minecraft/mc-mods/the-lost-cities
-git clone --depth 1 'https://github.com/McJty/LostCities' 'sources/lostcities/repo'
+git clone --depth 1 --branch '1.12' 'https://github.com/McJty/LostCities' 'sources/lostcities/repo'
 
 # luckified
 # https://www.curseforge.com/minecraft/mc-mods/luckified
@@ -640,6 +640,10 @@ git clone --depth 1 --branch '1.12' 'https://github.com/SlimeKnights/Mantle' 'so
 # materialtweaker
 # https://www.curseforge.com/minecraft/mc-mods/materialtweaker
 git clone --depth 1 'https://github.com/fonnymunkey/MaterialTweaker' 'sources/materialtweaker/repo'
+
+# materialtweaker
+# library not on curseforge
+git clone --depth 1 'https://github.com/McJtyMods/McJtyTools' 'sources/mcjtytools/repo'
 
 # mindpalaces
 # https://www.curseforge.com/minecraft/mc-mods/mind-palaces
