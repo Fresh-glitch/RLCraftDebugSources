@@ -1089,3 +1089,8 @@ git clone --depth 1 'https://github.com/yungnickyoung/YUNGs-Law' 'sources/yungsl
 # zenutils
 # https://www.curseforge.com/minecraft/mc-mods/zenutil
 git clone 'https://github.com/friendlyhj/ZenUtils' 'sources/zenutils/repo' && cd 'sources/zenutils/repo' && git checkout dd1b16a47e8b18a3ba909cf7fbf7633c5ab398f3 && cd ../../..
+
+
+
+# fancygradle
+git clone 'https://gitlab.com/gofancy/fancygradle' 'sources_gradleplugins/fancygradle'
