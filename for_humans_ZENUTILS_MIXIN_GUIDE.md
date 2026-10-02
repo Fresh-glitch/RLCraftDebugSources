@@ -162,8 +162,8 @@ at: {value: "INVOKE", target: "Ljava/util/List;add(Ljava/lang/Object;)Z", ordina
 
 **FIELD** - At field access (get or put). Requires `target`:
 ```js
-at: {value: "FIELD", target: "Lnet/minecraft/entity/Entity;health:F"}
-at: {value: "FIELD", target: "Lnet/minecraft/world/World;isRemote:Z", opcode: 180}  // optional, 180 = GETFIELD, 181 = PUTFIELD
+at: {value: "FIELD", target: "Lnet/minecraft/entity/Entity;field_70143_R:F"}  // fallDistance
+at: {value: "FIELD", target: "Lnet/minecraft/world/World;field_72995_K:Z", opcode: 180}  // isRemote; opcode is optional, 180 = GETFIELD, 181 = PUTFIELD
 ```
 
 **NEW** - At object allocation (the NEW bytecode, before constructor runs):
@@ -204,7 +204,7 @@ at: {value: "MIXINEXTRAS:EXPRESSION"}
 // Requires #mixin Definition and #mixin Expression annotations
 ```
 
-Other less common injectors: `JUMP`, `INVOKE_ASSIGN`, `INVOKE_STRING`, `CTOR_HEAD`
+Other less common injection points: `JUMP`, `INVOKE_ASSIGN`, `INVOKE_STRING`, `CTOR_HEAD`
 
 ### Common @At Parameters
 
@@ -244,7 +244,8 @@ slice: {
 
 ### Target String Format
 
-When using `target` parameter for methods/fields, use JVM descriptor format:
+When using `target` parameter for methods/fields, use JVM descriptor format.
+Vanilla members still need their SRG names here (see SRG Remapping Rules):
 
 **Method targets:**
 ```
@@ -253,9 +254,9 @@ Lpackage/ClassName;methodName(ParameterTypes)ReturnType
 
 **Examples:**
 ```js
-"Lnet/minecraft/entity/Entity;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z"
+"Lnet/minecraft/entity/Entity;func_70097_a(Lnet/minecraft/util/DamageSource;F)Z"  // attackEntityFrom
 "Ljava/util/List;add(Ljava/lang/Object;)Z"
-"Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;"
+"Lnet/minecraft/item/ItemStack;func_77973_b()Lnet/minecraft/item/Item;"  // getItem
 ```
 
 **Field targets:**
@@ -265,8 +266,8 @@ Lpackage/ClassName;fieldName:Type
 
 **Examples:**
 ```js
-"Lnet/minecraft/entity/Entity;health:F"
-"Lnet/minecraft/world/World;isRemote:Z"
+"Lnet/minecraft/entity/Entity;field_70143_R:F"  // fallDistance
+"Lnet/minecraft/world/World;field_72995_K:Z"  // isRemote
 ```
 
 For more info refer to https://docs.fabricmc.net/develop/mixins/bytecode.
@@ -354,7 +355,7 @@ function modifyDamage(damage as float) as float {
 
 Use `ordinal` in `@At` to select which STORE/LOAD operation, and `ordinal` in the annotation to select which local variable of the given type.
 You can also use `index` for the exact local variable slot independently of its type, or `name` for the local variable name.
-Note that method parameters are also local variables, so index 0 is always the first method parameter - if it has parameters.
+Note that method parameters are also local variables. `index` is the slot in the local variable table: in a static method index 0 is the first parameter, in a non-static method index 0 is `this` and the first parameter is index 1. `long` and `double` locals take two slots each.
 
 ### ModifyArg
 
@@ -421,7 +422,7 @@ function shouldGenerateModifier(stack as native.net.minecraft.item.ItemStack) as
 }
 ```
 
-This only works with method calls that return void, but is a nice shortcut vs using WrapOperation and just not using the given Operation (or redirecting to no op, don't do that).
+This only works with method calls that return void and with field writes, but is a nice shortcut vs using WrapOperation and just not using the given Operation (or redirecting to no op, don't do that).
 
 ### WrapMethod
 
@@ -440,6 +441,7 @@ function wrapDamageCalc(attacker as Entity, target as Entity, original as mixin.
 ```
 
 Your handler receives the target method's parameters, followed by an `Operation`. Call `original.call(...)` with the same parameters.
+If your handler doesn't call `original`, other mods' changes inside that method are silently skipped too, so it only chains while it calls it.
 
 ### ModifyReceiver
 
@@ -449,7 +451,7 @@ Modify the receiver (the object) of a method call or field access:
 #mixin ModifyReceiver
 #{
 #   method: "damageEntity", // this would need to be obfuscated to SRG
-#   at: {value: "INVOKE", target: "Lnet/minecraft/entity/Entity;attackEntityFrom(Lnet/minecraft/util/Damagesource;F)Z"} // this too
+#   at: {value: "INVOKE", target: "Lnet/minecraft/entity/Entity;attackEntityFrom(Lnet/minecraft/util/DamageSource;F)Z"} // this too
 #}
 function changeTarget(originalTarget as Entity, source as native.net.minecraft.util.DamageSource, amount as float) as Entity {
     // Redirect the attack to a different entity
@@ -493,7 +495,7 @@ function myTargetMethod() as void {
 
 Allows targeting bytecode patterns using Java-like expression syntax. Requires `#mixin Definition` and `#mixin Expression` to define identifiers used in the expression.
 
-Use `at: {"MIXINEXTRAS:EXPRESSION"}`
+Use `at: {value: "MIXINEXTRAS:EXPRESSION"}`
 
 ```js
 #mixin Definition {id: "enchantment", local: {name: "enchantment"}}
@@ -565,7 +567,7 @@ function captureLocal(original as int, entity as EntityLivingBase) as int {
 - `{argsOnly: true}` - only capture method parameters
 - `{ordinal: 0}` - capture nth occurrence of a local type
 - `{name: "myName"}` - capture local with given name (won't work for vanilla locals)
-- `{index: 0}` - capture nth local variable independent of type
+- `{index: 0}` - capture the local in that slot of the local variable table, independent of type (slot 0 is `this` in a non-static method)
 
 Multiple locals can be captured. In that case specify parameter in #mixin Local to denote which of your mixin methods parameters each targets.
 Counting starts with 0 for the first parameter of your method, no matter if that is already a captured local or a normal mixin method parameter.
