@@ -100,6 +100,10 @@ Redirect:               function f(receiver as R, callArgs...) as Ret
 - Writable local: `#mixin Local{name: "x", ref: true}` + param type `int[]`; write `x[0] = ...` (= LocalRef).
 - `#mixin Share`: injector-to-injector local in same target method, array-typed like ref (syntax per human guide; verify on ZenUtils wiki before relying).
 - `#mixin Cancellable`: adds `ci`/`cir` param to non-Inject injectors.
+- MixinExtras Expression: lines ABOVE the injector, one `#mixin Definition` per identifier, then `#mixin Expression`, then the injector with `at: {value: "MIXINEXTRAS:EXPRESSION"}`:
+  `#mixin Definition {id: "enchantment", local: {name: "enchantment"}}` (or `field: "Lowner/Cls;name:Desc"`, `method: "Lowner/Cls;name(Args)Ret"`; vanilla members SRG, [HARD] as in sec 3)
+  `#mixin Expression {value: "enchantment == null"}` + `#mixin ModifyExpressionValue {method: "deserialize", at: {value: "MIXINEXTRAS:EXPRESSION"}}` -> `function f(original as bool) as bool`.
+  Expression language: MixinExtras wiki, Expressions.
 - `#mixin Shadow` on `var`/`function` = target's existing (private) member. Outer instance of inner class: `#mixin Shadow{aliases: "this$0"} var outer as Outer;`.
 - `#mixin Unique` on ADDED fields/methods [STYLE]: prevents name clash with other mixins.
 - Added method (no injector annotation) becomes a real member of target: callable from other scripts as `native.<TargetFqcn>.zenutils_x()` (static) or on instances.
