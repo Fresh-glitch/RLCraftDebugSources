@@ -498,7 +498,7 @@ Allows targeting bytecode patterns using Java-like expression syntax. Requires `
 Use `at: {value: "MIXINEXTRAS:EXPRESSION"}`
 
 ```js
-#mixin Definition {id: "enchantment", local: {name: "enchantment"}}
+#mixin Definition {id: "enchantment", local: {type: "Lnet/minecraft/enchantment/Enchantment;", name: "enchantment"}}
 #mixin Expression {value: "enchantment == null"}
 #mixin ModifyExpressionValue
 #{
@@ -518,7 +518,7 @@ function modifyNullCheck(original as bool) as bool {
 - Your handler modifies the value of that expression
 
 **Definition types:**
-- `local: {type: "ClassName"}` - Define a local variable identifier
+- `local: {type: "Lcom/example/Class;", name: "x"}` - Define a local variable identifier. `type` is required and is a descriptor (`I` for an int); without it nothing matches
 - `field: "Lcom/example/Class;fieldName:LType;"` - Define a field identifier
 - `method: "Lcom/example/Class;methodName(...)V"` - Define a method identifier
 

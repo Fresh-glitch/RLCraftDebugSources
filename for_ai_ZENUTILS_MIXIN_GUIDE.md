@@ -4,8 +4,8 @@
 
 ## 0. WHAT / WHERE
 - ZenUtils = CraftTweaker addon; `#loader mixin` scripts compile zenClasses into real SpongePowered Mixin classes at startup. Semantics = Mixin 0.8 + MixinExtras (WrapOperation, ModifyExpressionValue, WrapMethod, Local, Share, Expression all available).
-- Default file targets (no other instruction): `../RLCraftParasited/overrides/scripts/zenutilsmixins.zs` (common), `zenutilsmixins_client.zs` (client only, has `#sideonly client`). Other existing mixin files: `greaterxptomemixins.zs`, `zenutilsmixins_rtg.zs`. Config: `_zenutilsconfigs.zs` + `zenutils_mixinconfigupdate.zs`.
-- Mappings (stable_39): `mcpdeobfuscator/mappings/{methods,fields,params}.csv`, columns `searge,name,side,desc`. NO owner column.
+- Default file targets (no other instruction): `../RLCraftParasited/overrides/scripts/zenutilsmixins.zs` (common), `zenutilsmixins_client.zs` (client only, has `#sideonly client`). Other existing mixin files: `greaterxptomemixins.zs`, `mixin_enchantertools.zs`, `zenutilsmixins_rtg.zs` (all: grep `#loader mixin`). Config: `_zenutilsconfigs.zs` + `zenutils_mixinconfigupdate.zs`.
+- Mappings (stable_39): `mcpdeobfuscator/mappings/{methods,fields,params}.csv`, columns `searge,name,side,desc` (`params.csv`: `param,name,side`). NO owner column.
 - Readable source of any shipped jar: `python3 mcpdeobfuscator/deobfuscate_mods.py --mods-dir <mods> --only <jar substring>` -> `decompiled/<jar>/src/main/java` (MCP names). Needs Java 17+ first on PATH.
 - `clone_repos.sh` = lookup table modid -> source repo URL. Repo != shipped build; target the SHIPPED jar.
 
@@ -101,8 +101,10 @@ Redirect:               function f(receiver as R, callArgs...) as Ret
 - `#mixin Share`: injector-to-injector local in same target method, array-typed like ref (syntax per human guide; verify on ZenUtils wiki before relying).
 - `#mixin Cancellable`: adds `ci`/`cir` param to non-Inject injectors.
 - MixinExtras Expression: lines ABOVE the injector, one `#mixin Definition` per identifier, then `#mixin Expression`, then the injector with `at: {value: "MIXINEXTRAS:EXPRESSION"}`:
-  `#mixin Definition {id: "enchantment", local: {name: "enchantment"}}` (or `field: "Lowner/Cls;name:Desc"`, `method: "Lowner/Cls;name(Args)Ret"`; vanilla members SRG, [HARD] as in sec 3)
+  `#mixin Definition {id: "enchantment", local: {type: "Lnet/minecraft/enchantment/Enchantment;", name: "enchantment"}}` (or `field: "Lowner/Cls;name:Desc"`, `method: "Lowner/Cls;name(Args)Ret"`; vanilla members SRG, [HARD] as in sec 3)
   `#mixin Expression {value: "enchantment == null"}` + `#mixin ModifyExpressionValue {method: "deserialize", at: {value: "MIXINEXTRAS:EXPRESSION"}}` -> `function f(original as bool) as bool`.
+  [HARD] `local` needs `type` as a descriptor (`I` for int): without it nothing matches, ZenUtils logs "does not hit any injection point".
+  `?` matches anything without a Definition: `#mixin Expression {value: "? != null"}`.
   Expression language: MixinExtras wiki, Expressions.
 - `#mixin Shadow` on `var`/`function` = target's existing (private) member. Outer instance of inner class: `#mixin Shadow{aliases: "this$0"} var outer as Outer;`.
 - `#mixin Unique` on ADDED fields/methods [STYLE]: prevents name clash with other mixins.
@@ -129,7 +131,7 @@ Redirect:               function f(receiver as R, callArgs...) as Ret
 
 ## 9. CONFIGURABLE MIXIN (3 parts, all needed)
 1. Mixin class: `static zenutils_cfg_name as <T> = <default>;` read in handler.
-2. `_zenutilsconfigs.zs`: add option inside existing `ConfigUtils.named("parasited")` chain, e.g. `.category("srp")` ... `.rangedInteger("key", def, min, max).sliding().displayName("..").comment("..").add()` ... `.add()`. Builders used in pack: `booleanValue(k,def)`, `doubleValue(k,def)`, `rangedInteger(k,def,min,max)`, `rangedDouble(k,def,min,max)`, `lowerRangedInteger(k,def,min)`, `stringArrayMap`; modifiers `.sliding()`, `.requiresMcRestart()`. Generated class: `dynamic.zenutils.config.Parasited` -> `Parasited.<key>` (root) / `Parasited.<category>.<key>`.
+2. `_zenutilsconfigs.zs`: add option inside existing `ConfigUtils.named("parasited")` chain, e.g. `.category("srp")` ... `.rangedInteger("key", def, min, max).sliding().displayName("..").comment("..").add()` ... `.add()`. Builders used in pack: `booleanValue(k,def)`, `doubleValue(k,def)`, `rangedInteger(k,def,min,max)`, `rangedDouble(k,def,min,max)`, `lowerRangedInteger(k,def,min)`, `lowerRangedDouble(k,def,min)`, `stringArrayMap`; modifiers `.sliding()`, `.requiresMcRestart()`. Generated class: `dynamic.zenutils.config.Parasited` -> `Parasited.<key>` (root) / `Parasited.<category>.<key>`.
 3. `zenutils_mixinconfigupdate.zs` function `update()`: `native.<TargetFqcn>.zenutils_cfg_name = Parasited.<path>;` (runs at load + OnConfigChangedEvent for modid "parasited"). Neither script has a `#loader` line; `_` prefix makes the config script load first (alphabetical). Keep that order.
 - Verify part 3 with a probe (sec 7 silent-fail gotcha).
 
@@ -209,7 +211,7 @@ zenClass QuarkHandlerQKAncientTomeAnvilUpdateMixin {
 - MCP name in at.target for vanilla -> no match. SRG from javap of mod jar.
 - `this0.addedMethod()` -> null. Bare call.
 - wrong `native.` path in assignment -> silent.
-- ModifyConstant: `x > 0`/`x == 0` compile to zero-branch opcodes (no constant instruction) -> not found; `static final` constants are inlined at use sites -> target the literal where used, not the field.
+- ModifyConstant: comparisons with 0 compile to zero-branch opcodes (no constant instruction) -> not found by default; `<`/`<=`/`>=`/`> 0` only with `expandZeroConditions` (`Constant.Condition`), `== 0`/`!= 0` never -> ModifyExpressionValue on the compared value; `static final` constants are inlined at use sites -> target the literal where used, not the field.
 - ordinal counts matching instructions in shipped bytecode of THAT method (0-based); prefer `slice: {from: {...}, to: {...}}` over ordinal > 0.
 - Inject handler on non-void target needs CallbackInfoReturnable; cancelling needs `cancellable: true`.
 - Client-only class (net.minecraft.client.*, render, gui) in a common script -> server crash/skip. Put in `zenutilsmixins_client.zs`.
