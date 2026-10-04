@@ -118,6 +118,8 @@ Redirect:               function f(receiver as R, callArgs...) as Ret
 - Cast `x as T`; float literals `0.0F` or `(x as float)`; `isNull(x)` not `== null`; `instanceof` works with native types; class literal `Foo.class`.
 - Arrays: `[T]` or `T[]`; literal `["a","b"] as string[]`; contains: `arr has "x"`; `for x in arr`; `while (...)`; ternary ok.
 - `for x in` over native `List` works; over native `Set` fails ("No iterator with 1 variables") -> use `.iterator()` + while. Native `Set.toString()` not callable.
+- A loop body may redeclare the loop variable with no error: `for p in ps { val p = ps[0]; ... }` compiles and only ever reads `ps[0]`.
+- From a mixin script, call plain Java classes: `native.` refuses classes registered as CraftTweaker ZenClasses ("is not natively accessible"), and other mods' ZenClasses (e.g. `srpmixins.SRPSaveData`) are not registered yet when mixin scripts compile ("could not find package null").
 - Static access of a Java static: `native.pkg.Cls.FIELD`, or import + `Cls.FIELD` (`Item.REGISTRY`, `PotionTypes.field_185229_a`).
 - [HARD gotcha] Assigning to `native.wrong.pkg.Cls.field` (class doesn't exist) fails SILENTLY at runtime: no error, field keeps default. Copy fqcn from javap/decompiled package line.
 - Comments: `//` [STYLE]; avoid `#` comments (collide with directives).
@@ -126,7 +128,7 @@ Redirect:               function f(receiver as R, callArgs...) as Ret
 - crafttweaker.log per mixin: "Loaded mixin class" + "Applying mixin class" = took; "Skip loading mixin class ..., because the target ... is not found" = wrong target name ($ vs ., package, client class on server); script compile errors also there.
 - latest.log: InvalidInjectionException / "hits no injection point" / "Critical injection failure". Many configs set no `defaultRequire`, so an injector matching 0 points can be SILENT -> prove behaviour.
 - Prove behaviour: dedicated server for server logic (client-only classes absent there -> `#sideonly client` for those); probe script `#priority -2000` with `print(...)` of statics to prove config sync; in-game test for client paths.
-- `-Dmixin.debug.export=true` -> `.mixin.out/` holds transformed classes: shows every mixin applied to a class (conflict check, sec 1.4).
+- `-Dmixin.debug.export=true` -> `.mixin.out/` holds transformed classes: shows every mixin applied to a class (conflict check, sec 1.4); `javap -c` on one shows whether a merged handler is actually called. Not `-Dmixin.debug.countInjections=true`: it makes every injector matching nothing fatal, and ZenUtils' own `MixinEntityItem` stops the pack in bootstrap.
 - Applied != runs: another mod's HEAD cancel in same method stops yours. Measure the state your code changes.
 
 ## 9. CONFIGURABLE MIXIN (3 parts, all needed)
@@ -219,3 +221,5 @@ zenClass QuarkHandlerQKAncientTomeAnvilUpdateMixin {
 - Inject handler on non-void target needs CallbackInfoReturnable; cancelling needs `cancellable: true`.
 - Client-only class (net.minecraft.client.*, render, gui) in a common script -> server crash/skip. Put in `zenutilsmixins_client.zs`.
 - Applied mixin that never runs -> look for another mod cancelling same method first.
+- Target compiled for Java 6 (class major version 50, bytes 6-7; 52 = Java 8; Bloodmoon is 50): a handler calling a STATIC INTERFACE method (e.g. `SRPSaveDataInterface.get`) dies with `VerifyError: Illegal type at constant pool entry`, unless some Java 8 mixin on the class makes Mixin raise it to 52; ZenUtils mixin classes are 50 and don't. Call a class method instead.
+- `#{...}` bodies are read by lenient Gson: `ordinal = 1` works like `ordinal: 1`.
