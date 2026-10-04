@@ -51,7 +51,7 @@ zenClass TargetClassMixin {                          // [STYLE] name = <TargetSi
 ## 3. NAMES / REMAP [HARD]
 - ZenUtils sets remap=false on everything. NEVER write `remap`: the script fails to parse ("remap always is false").
 - Therefore in `method:` and `at.target:` vanilla members MUST be SRG: `func_70097_a` (attackEntityFrom), `field_72995_K` (isRemote). MCP name there = "hits no injection point"/target not found.
-- Mod members: always their source names (mods aren't obfuscated).
+- Mod members: their source names (mods aren't obfuscated), except a mod's override of a vanilla method, which keeps the SRG name (sec 1.3; `func_70636_d` in sec 12).
 - Inside function bodies: MCP names work (`this0.world.isRemote`, `stack.getItem()`); SRG also works (`slot.field_75222_d`). [STYLE] prefer MCP in bodies; when an SRG name appears anywhere, add `// func_xxx = readableName`.
 - `method:` special values: `"<init>"` constructor, `"<init>*"` all constructors, `"<clinit>"` static init, `"lambda$getSubBiomes$1"` (exact from javap), array `["func_77659_a", "addXP"]` for several.
 - Descriptor syntax: method `Lowner/Class;name(ArgDescs)RetDesc`, field `Lowner/Class;name:Desc`. Desc: Z bool, B byte, C char, S short, I int, J long, F float, D double, V void, `Lpkg/Cls;` object, `[` array prefix. Owner may be omitted (`"func_184642_a(Lnet/minecraft/inventory/EntityEquipmentSlot;F)V"`) to match any owner.
@@ -107,7 +107,7 @@ Redirect:               function f(receiver as R, callArgs...) as Ret
   `?` matches anything without a Definition: `#mixin Expression {value: "? != null"}`.
   Expression language: MixinExtras wiki, Expressions.
 - `#mixin Shadow` on `var`/`function` = target's existing (private) member. Outer instance of inner class: `#mixin Shadow{aliases: "this$0"} var outer as Outer;`.
-- `#mixin Unique` on ADDED fields/methods [STYLE]: prevents name clash with other mixins.
+- Added statics are `public static` in the target [HARD]: two zenClasses on the same target adding the same static name share ONE field, with or without `#mixin Unique`. Name every added static so no other mixin on that target uses it.
 - Added method (no injector annotation) becomes a real member of target: callable from other scripts as `native.<TargetFqcn>.zenutils_x()` (static) or on instances.
 - `zenClass X extends native.<SuperOfTarget>` (or imported simple name) -> `super.method()` available. [STYLE] added override = delegate to `super`, don't retype vanilla body; mark `// @Override`.
 - Static field with init: `static zenutils_x as int = 3;`; set in `<clinit>` TAIL inject (`#mixin Static`) if computed.
