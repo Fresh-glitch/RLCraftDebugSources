@@ -144,6 +144,8 @@ Redirect:               function f(receiver as R, callArgs...) as Ret
 ## 11. STYLE (maintainer review = Nischhelm) [STYLE]
 - Short: one plain comment line where non-obvious; NO block comments / essays ("ai yapping" gets cut). Reasoning goes in PR text.
 - `if(` no space; braceless one-line ifs; `else` on own line ok; statics top, injectors before added methods.
+- Java (FermiumBooter/FermiumMixins/RLMixins): import every class; no fully qualified names in code (FermiumBooter has none, FermiumMixins 2 in 376 files, both in copies of Forge-patched vanilla). If the simple name clashes with an existing import, use a different API instead of writing the path out (FermiumBooter#10: `new File(url.toURI())`, not `org.spongepowered.asm.util.Files.toFile(url)`). ZenScript differs: inline `native.<fqcn>` is normal in pack scripts.
+- Comment length follows the file: measure the neighbouring comments first (FermiumBooter's median is 33 characters); "one line" does not license 150 characters.
 - Library helpers over hand logic (`MathHelper.clamp` not two ifs). Delegate (`super.`) over restating vanilla.
 - Fallback values must fail toward "nothing gained" (e.g. XP tome damage MAX = empty, not 0 = full).
 - Commit messages: one lowercase line. Contributor credit only to the human; no AI name/trailer/footer in commits, PRs, comments.
