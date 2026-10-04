@@ -614,7 +614,7 @@ function readShared(ci as mixin.CallbackInfo, shared as int[]) as void {
 ## @Cancellable Usage
 
 Cancellable allows you to add a cancellable CallbackInfo/-Returnable in injectors that aren't @Inject.
-It works the same way as @Local, by adding a method parameter of type mixin.CallbackInfo/-Returnable.
+It works the same way as @Local and @Share, by adding a method parameter of type mixin.CallbackInfo/-Returnable.
 
 ## @Shadow Usage
 

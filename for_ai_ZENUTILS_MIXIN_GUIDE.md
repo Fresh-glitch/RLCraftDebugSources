@@ -44,7 +44,7 @@ zenClass TargetClassMixin {                          // [STYLE] name = <TargetSi
 }
 ```
 - Annotation forms: multi-line `#mixin X` + `#{` ... `#}` lines, or single-line `#mixin X {k: v, ...}`. Keys use `:` [STYLE] (some pack lines use `ordinal = 1`; don't copy that).
-- Modifier annotations stack ABOVE the injector line: `#mixin Static` then `#mixin Inject ...`. `#mixin Local{...}` / `#mixin Cancellable` lines go AFTER the injector block, before `function`.
+- Modifier annotations stack ABOVE the injector line: `#mixin Static` then `#mixin Inject ...`. `#mixin Local{...}` / `#mixin Share` / `#mixin Cancellable` lines go AFTER the injector block, before `function`.
 - Inner class target: `targets: "a.b.Outer$Inner"` / anonymous `"a.b.Outer$1"` [HARD: `$` here, `.` silently fails "target not found"]. In `native.` type refs use `.`: `native.java.util.Map.Entry`, `native.net.minecraftforge.event.RegistryEvent.Register`.
 - ZenUtils refuses vanilla/early-loaded targets ("a non-mod class or already loaded"). Target a mod class or a Forge event handler instead; vanilla-only changes need a Java mod (FermiumMixins, sec 10).
 
