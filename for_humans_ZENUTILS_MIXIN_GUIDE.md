@@ -593,13 +593,14 @@ function captureLocal(original as int, someLocal as int[]) as int {
 
 ## @Share Usage
 
-Share allows you to create your own local variables in the target method that you can reuse in other injectors targeting the same method.
-It works the same way as @Local, but you need to give it a name, and it needs to be a LocalRef = array.
+In Java mixins, Share allows you to create your own local variables in the target method that you can reuse in other injectors targeting the same method.
+It does not work in ZenUtils (1.27.5, and current master): `#mixin Share` is written onto the handler method instead of its parameter, so Mixin rejects the array as an extra argument, and adding `parameter:` to it fails to parse.
+Keep state shared between injectors in a static field added to your mixin class instead.
 
 ## @Cancellable Usage
 
 Cancellable allows you to add a cancellable CallbackInfo/-Returnable in injectors that aren't @Inject.
-It works the same way as @Local and @Share, by adding a method parameter of type mixin.CallbackInfo/-Returnable.
+It works the same way as @Local, by adding a method parameter of type mixin.CallbackInfo/-Returnable.
 
 ## @Shadow Usage
 
