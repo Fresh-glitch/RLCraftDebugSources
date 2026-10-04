@@ -594,8 +594,9 @@ function captureLocal(original as int, someLocal as int[]) as int {
 ## @Share Usage
 
 In Java mixins, Share allows you to create your own local variables in the target method that you can reuse in other injectors targeting the same method.
-It does not work in ZenUtils (1.27.5, and current master): `#mixin Share` is written onto the handler method instead of its parameter, so Mixin rejects the array as an extra argument, and adding `parameter:` to it fails to parse.
+It does not work before ZenUtils 1.28.7, which includes the 1.27.5 this pack ships: `#mixin Share` is written onto the handler method instead of its parameter, so Mixin rejects the array as an extra argument, and adding `parameter:` to it fails to parse.
 Keep state shared between injectors in a static field added to your mixin class instead.
+From 1.28.7 (which needs MixinBooter 11.x) it works the same way as @Local, but you need to give it a name, and it needs to be a LocalRef = array.
 
 ## @Cancellable Usage
 
