@@ -213,6 +213,7 @@ zenClass QuarkHandlerQKAncientTomeAnvilUpdateMixin {
 - wrong `native.` path in assignment -> silent.
 - ModifyConstant: comparisons with 0 compile to zero-branch opcodes (no constant instruction) -> not found by default; `<`/`<=`/`>=`/`> 0` only with `expandZeroConditions` (`Constant.Condition`), `== 0`/`!= 0` never -> ModifyExpressionValue on the compared value; `static final` constants are inlined at use sites -> target the literal where used, not the field.
 - ordinal counts matching instructions in shipped bytecode of THAT method (0-based); prefer `slice: {from: {...}, to: {...}}` over ordinal > 0.
+- `FIELD` without `opcode` matches reads AND writes, so a `putfield` takes an ordinal too. Reads only: `opcode: 180` (GETFIELD; 181 PUTFIELD, 178 GETSTATIC, 179 PUTSTATIC; Java `opcode = Opcodes.GETFIELD`). List the matches with `javap -c` before picking.
 - Inject handler on non-void target needs CallbackInfoReturnable; cancelling needs `cancellable: true`.
 - Client-only class (net.minecraft.client.*, render, gui) in a common script -> server crash/skip. Put in `zenutilsmixins_client.zs`.
 - Applied mixin that never runs -> look for another mod cancelling same method first.
