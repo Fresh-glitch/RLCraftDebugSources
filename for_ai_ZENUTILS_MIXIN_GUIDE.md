@@ -3,7 +3,7 @@
 # PRIORITY: rules marked [HARD] break the mixin or crash if violated; [STYLE] = maintainer (Nischhelm) review standard.
 
 ## 0. WHAT / WHERE
-- ZenUtils = CraftTweaker addon; `#loader mixin` scripts compile zenClasses into real SpongePowered Mixin classes at startup. Semantics = Mixin 0.8 + MixinExtras (WrapOperation, ModifyExpressionValue, WrapMethod, Local, Share, Expression all available).
+- ZenUtils = CraftTweaker addon; `#loader mixin` scripts compile zenClasses into real SpongePowered Mixin classes at startup. Semantics = Mixin 0.8 + MixinExtras (WrapOperation, ModifyExpressionValue, WrapMethod, Local, Expression available; Share is NOT, sec 6).
 - Default file targets (no other instruction): `../RLCraftParasited/overrides/scripts/zenutilsmixins.zs` (common), `zenutilsmixins_client.zs` (client only, has `#sideonly client`). Other existing mixin files: `greaterxptomemixins.zs`, `mixin_enchantertools.zs`, `zenutilsmixins_rtg.zs` (all: grep `#loader mixin`). Config: `_zenutilsconfigs.zs` + `zenutils_mixinconfigupdate.zs`.
 - Mappings (stable_39): `mcpdeobfuscator/mappings/{methods,fields,params}.csv`, columns `searge,name,side,desc` (`params.csv`: `param,name,side`). NO owner column.
 - Readable source of any shipped jar: `python3 mcpdeobfuscator/deobfuscate_mods.py --mods-dir <mods> --only <jar substring>` -> `decompiled/<jar>/src/main/java` (MCP names). Needs Java 17+ first on PATH.
@@ -44,12 +44,12 @@ zenClass TargetClassMixin {                          // [STYLE] name = <TargetSi
 }
 ```
 - Annotation forms: multi-line `#mixin X` + `#{` ... `#}` lines, or single-line `#mixin X {k: v, ...}`. Keys use `:` [STYLE] (some pack lines use `ordinal = 1`; don't copy that).
-- Modifier annotations stack ABOVE the injector line: `#mixin Static` then `#mixin Inject ...`. `#mixin Local{...}` / `#mixin Share` lines go AFTER the injector block, before `function`.
+- Modifier annotations stack ABOVE the injector line: `#mixin Static` then `#mixin Inject ...`. `#mixin Local{...}` / `#mixin Cancellable` lines go AFTER the injector block, before `function`.
 - Inner class target: `targets: "a.b.Outer$Inner"` / anonymous `"a.b.Outer$1"` [HARD: `$` here, `.` silently fails "target not found"]. In `native.` type refs use `.`: `native.java.util.Map.Entry`, `native.net.minecraftforge.event.RegistryEvent.Register`.
 - ZenUtils refuses vanilla/early-loaded targets ("a non-mod class or already loaded"). Target a mod class or a Forge event handler instead; vanilla-only changes need a Java mod (FermiumMixins, sec 10).
 
 ## 3. NAMES / REMAP [HARD]
-- ZenUtils sets remap=false on everything. NEVER write `remap` (crash).
+- ZenUtils sets remap=false on everything. NEVER write `remap`: the script fails to parse ("remap always is false").
 - Therefore in `method:` and `at.target:` vanilla members MUST be SRG: `func_70097_a` (attackEntityFrom), `field_72995_K` (isRemote). MCP name there = "hits no injection point"/target not found.
 - Mod members: always their source names (mods aren't obfuscated).
 - Inside function bodies: MCP names work (`this0.world.isRemote`, `stack.getItem()`); SRG also works (`slot.field_75222_d`). [STYLE] prefer MCP in bodies; when an SRG name appears anywhere, add `// func_xxx = readableName`.
@@ -96,10 +96,10 @@ Redirect:               function f(receiver as R, callArgs...) as Ret
 - Handler cannot be `void` for value injectors; ModifyX must return the value.
 
 ## 6. SUGAR / MEMBERS
-- `#mixin Local` (no args): the single local of the handler param's type. `{ordinal: N}` Nth local of that type. `{name: "x"}` by LVT name (works on mod code, NOT vanilla: no LVT names). `{index: N}` = LVT SLOT: non-static method slot 0 = `this`, params start at 1, long/double take 2 slots. `{argsOnly: true}` = target params only. Several: one line each with `parameter: K` = index of YOUR handler param it binds (counting from 0, all handler params).
+- `#mixin Local` (no args): the single local of the handler param's type. `{ordinal: N}` Nth local of that type. `{name: "x"}` by LVT name (works on mod code, NOT vanilla: no LVT names). `{index: N}` = LVT SLOT: non-static method slot 0 = `this`, params start at 1, long/double take 2 slots. `{argsOnly: true}` = target params only. Several: one line each with `parameter: K` = index of YOUR handler param it binds (counting from 0, all handler params). Without `parameter` it binds the LAST handler param.
 - Writable local: `#mixin Local{name: "x", ref: true}` + param type `int[]`; write `x[0] = ...` (= LocalRef).
-- `#mixin Share`: injector-to-injector local in same target method, array-typed like ref (syntax per human guide; verify on ZenUtils wiki before relying).
-- `#mixin Cancellable`: adds `ci`/`cir` param to non-Inject injectors.
+- `#mixin Share` does NOT work [HARD] (ZenUtils 1.27.5 and master as of 2026-09): ZenUtils writes it on the handler method, not the parameter, so Mixin rejects the extra `int[]` ("Invalid descriptor ... LocalIntRef"); adding `parameter:` is a parse error. Keep state shared between injectors in an added static field instead.
+- `#mixin Cancellable`: adds `ci`/`cir` param to non-Inject injectors (same `parameter` rule as Local).
 - MixinExtras Expression: lines ABOVE the injector, one `#mixin Definition` per identifier, then `#mixin Expression`, then the injector with `at: {value: "MIXINEXTRAS:EXPRESSION"}`:
   `#mixin Definition {id: "enchantment", local: {type: "Lnet/minecraft/enchantment/Enchantment;", name: "enchantment"}}` (or `field: "Lowner/Cls;name:Desc"`, `method: "Lowner/Cls;name(Args)Ret"`; vanilla members SRG, [HARD] as in sec 3)
   `#mixin Expression {value: "enchantment == null"}` + `#mixin ModifyExpressionValue {method: "deserialize", at: {value: "MIXINEXTRAS:EXPRESSION"}}` -> `function f(original as bool) as bool`.
